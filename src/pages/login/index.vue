@@ -1,5 +1,7 @@
 <template>
   <div class="wrapper">
+    <div>
+    </div>
     <div class="box" v-if="true">
       <div class="logo">
         <img src="/static/images/logo.svg" />
@@ -8,16 +10,27 @@
       <ul>
         <li>获取你的公开信息（昵称、头像等）</li>
       </ul>
-      <button type="primary"  open-type="getUserInfo" @getuserinfo="getUserInfo">微信登录</button>
+
+      <ven-cell-group>
+        <van-field label="用户名" name="username" placeholder="在此处填写"></van-field>
+        <van-field label="电话号码" name="phone" placeholder="在此处填写" type="number"></van-field>
+        <van-field label="邮箱" name="邮箱" placeholder="在此处填写"></van-field>
+        是否为教师身份？<van-switch :checked="checked" @change="onChange"></van-switch>
+      </ven-cell-group>
+      <button open-type="getUserIn fo"  type="primary" @getuserinfo="getUserInfo">微信登录</button>
     </div>
     <div class="low" v-else>当前版本太低，请升级！</div>
   </div>
 </template>
 <script>
-
+import mpSwitch from 'mpvue-weui/src/button';
 export default {
+  components: {
+    mpSwitch,
+  },
   data () {
     return {
+      checked:false,
     }
   },
   methods: {
@@ -27,6 +40,10 @@ export default {
     getUserInfo () {
       console.log("调用了login")
       this.$login.login()
+    },
+    onChange(){
+      this.checked = !this.checked;
+      this.$emit('change', this.checked);
     }
   }
 }
@@ -39,7 +56,7 @@ body
   .wrapper
     .box,.low
       position: absolute
-      top: 50%
+      top: 30%
       left: 50%
       transform: translate(-50%, -50%)
       white-space: nowrap
