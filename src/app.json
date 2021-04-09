@@ -36,6 +36,9 @@
     "van-switch": "/static/vant/switch/index",
     "van-cell-group": "/static/vant/cell-group/index",
     "van-row": "/static/vant/row/index",
-    "van-col": "/static/vant/col/index"
+    "van-col": "/static/vant/col/index",
+    "van-tag": "/static/vant/tag/index",
+    "van-checkbox": "/static/vant/checkbox/index",
+    "van-button": "/static/vant/button/index"
   }
 }

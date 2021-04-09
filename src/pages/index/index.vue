@@ -13,7 +13,7 @@ import joinmatch from "../../components/joinmatch";
 export default {
   components: {
     versev1,joinmatch
-  },
+  }
 }
 </script>
 
