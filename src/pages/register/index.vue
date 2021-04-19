@@ -39,7 +39,6 @@ export default {
         email:'',
         checked:false,
       }
-
     }
   },
   methods: {

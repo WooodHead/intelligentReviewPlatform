@@ -13,6 +13,7 @@ function login () {
           //  登录成功，获取用户信息
           console.log(res.code)
           getUserInfo().then((res) => {
+            console.log(res)
             //  此处res是getUserInfo获得的用户信息
             //console.log("第一层then后："+JSON.stringify(res))
             //console.log(result.code)

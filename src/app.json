@@ -39,6 +39,7 @@
     "van-col": "/static/vant/col/index",
     "van-tag": "/static/vant/tag/index",
     "van-checkbox": "/static/vant/checkbox/index",
-    "van-button": "/static/vant/button/index"
+    "van-button": "/static/vant/button/index",
+    "van-image": "/static/vant/image/index"
   }
 }
