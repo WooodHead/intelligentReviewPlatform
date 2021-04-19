@@ -10,7 +10,7 @@
             width="4rem"
           />
           <button v-if="canIUseGetUserProfile" @click="getUserProfile"> 获取头像昵称 </button>
-          <button v-else open-type="getUserInfo" @click="getUserInfo"> 获取头像昵称 </butt n>
+          <button v-else open-type="getUserInfo" @click="getUserInfo"> 获取头像昵称 </button>
         </div>
         <div v-else>
           <image :src="userInfo.avatarUrl" class="userinfo-avatar"></image>
