@@ -2,7 +2,7 @@
   "pages": [
     "pages/index/main",
     "pages/personal/main",
-    "pages/counter/main",
+    "pages/personalInfo/main",
     "pages/login/main"
   ],
   "window": {
@@ -35,11 +35,13 @@
     "van-field": "/static/vant/field/index",
     "van-switch": "/static/vant/switch/index",
     "van-cell-group": "/static/vant/cell-group/index",
+    "van-cell": "/static/vant/cell/index",
     "van-row": "/static/vant/row/index",
     "van-col": "/static/vant/col/index",
     "van-tag": "/static/vant/tag/index",
     "van-checkbox": "/static/vant/checkbox/index",
-    "van-button": "/static/vant/button/index",
-    "van-image": "/static/vant/image/index"
+    "van-image": "/static/vant/image/index",
+    "van-grid": "/static/vant/grid/index",
+    "van-grid-item": "/static/vant/grid-item/index"
   }
 }
