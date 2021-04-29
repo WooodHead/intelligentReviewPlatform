@@ -3,7 +3,7 @@ import Vue from 'vue'
 let vue = new Vue()
 
 //  登录获取openid
-function login () {
+function login (profile) {
   wx.showLoading()
   return new Promise((resolve, reject) => {
     wx.login({
@@ -11,21 +11,19 @@ function login () {
         if (res.code) {
           let result = res
           //  登录成功，获取用户信息
-          console.log(res.code)
-          getUserInfo().then((res) => {
+          getUserProfile(profile).then((res) => {
             console.log(res)
-            //  此处res是getUserInfo获得的用户信息
-            //console.log("第一层then后："+JSON.stringify(res))
-            //console.log(result.code)
+            //  此处res是getUserProfile获得的用户信息
+            console.log(result.code)
             return vue.$http.post({
-              'url': '/user/token',
+              'url': '/user/getToken',
               'data': {'code': result.code}
             }
-
             )
           }).then((res) => {
             //  此处res是post请求获得的token
             //console.log("cnm"+JSON.stringify(res))
+            console.log(res)
             wx.hideLoading()
             wx.navigateBack()
             //  此处将token存储起来
@@ -47,26 +45,13 @@ function login () {
 }
 
 //  获取用户信息
-function getUserInfo () {
+function getUserProfile(profile) {
   return new Promise((resolve, reject) => {
-    wx.getUserInfo({
-      //  获取用户信息成功
-      success (res) {
         //console.log("FUNCTION getUserInfo:"+JSON.stringify(res))
-        vue.$store.commit('SET_USERINFO', res.userInfo)
-        wx.setStorageSync('userInfo', res.userInfo)
-        resolve(res.userInfo)
-      },
-      fail () {
-        wx.hideLoading()
-        //  获取用户信息失败，清除全局存储的登录状态
-        vue.$store.commit('UPDATE_TOKEN', '')
-        wx.setStorageSync('userInfo', '')
-        //  显示一键登录
-        showLoginModal()
-      }
+        vue.$store.commit('SET_USERINFO', profile.userInfo)
+        wx.setStorageSync('userInfo', profile.userInfo)
+        resolve(profile)
     })
-  })
 }
 
 //  toast弹窗
@@ -95,7 +80,6 @@ function showLoginModal () {
 }
 
 function isLogin () {
-  console.log('调用了isLogin')
   console.log(wx.getStorageSync('token'))
   if (!wx.getStorageSync('token')) {
     showLoginModal()
