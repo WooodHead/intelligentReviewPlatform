@@ -17,8 +17,16 @@
         <div class="vanGrid">
           <van-grid column-num="3">
             <van-grid-item icon="medal-o" icon-color="#0048FFFF" text="赛事管理" />
+
             <van-grid-item icon="manager-o" icon-color="#FF8C00FF" text="我的赛事" />
-            <van-grid-item icon="info-o" icon-color="#FF5100FF" text="个人详细" />
+
+            <van-grid-item
+              icon="info-o"
+              icon-color="#FF5100FF"
+              link-type="navigateTo"
+              text="个人详细"
+              url="/pages/personalInfo/main"
+            />
           </van-grid>
         </div>
         <div class="pageBody">

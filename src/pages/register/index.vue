@@ -2,27 +2,17 @@
   <div class="wrapper">
     <div>
     </div>
-    <div v-if="true" class="box">
-      <div class="logo">
-        <img src="/static/images/logo.svg" />
-      </div>
-      <p>登录后开发者将获取一些权限</p>
-      <ul>
-        <li>获取你的公开信息（昵称、头像等）</li>
-        <li>请填写下列信息再点击登录（都为必填项）</li>
-      </ul>
-
       <ven-cell-group>
-        <van-field :value="registerform.username" label="用户名" name="username" placeholder="在此处填写" @input="registerform.username=$event.mp.detail"></van-field>
-        <van-field :value="registerform.phone" label="电话号码" name="phone" placeholder="在此处填写" type="number" @input="registerform.phone=$event.mp.detail"></van-field>
-        <van-field :value="registerform.email" label="邮箱" name="邮箱" placeholder="在此处填写" @input="registerform.email=$event.mp.detail"></van-field>
+        <van-field :value="registerForm.username" label="用户名" name="username" placeholder="在此处填写" @input="registerForm.username=$event.mp.detail"></van-field>
+        <van-field :value="registerForm.phone" label="电话号码" name="phone" placeholder="在此处填写" type="number" @input="registerForm.phone=$event.mp.detail"></van-field>
+        <van-field :value="registerForm.email" label="邮箱" name="邮箱" placeholder="在此处填写" @input="registerForm.email=$event.mp.detail"></van-field>
       </ven-cell-group>
       <div style="position: relative;margin-top: 5%">
-        <van-checkbox :value="registerform.checked" icon-size="25px" @change="onChange">是否为教师身份？</van-checkbox>
+        <van-checkbox :value="registerForm.checked" icon-size="25px" @change="onChange">是否为教师身份？</van-checkbox>
       </div>
       <button open-type="getUserInfo" style="position: relative;margin-top:20%" type="primary"  @click="submit">微信登录</button>
-    </div>
-    <div v-else class="low">当前版本太低，请升级！</div>
+
+
   </div>
 </template>
 <script>
@@ -33,7 +23,7 @@ export default {
   },
   data () {
     return {
-      registerform:{
+      registerForm:{
         username:'',
         phone:'',
         email:'',
@@ -47,8 +37,8 @@ export default {
     },
     onChange(){
       wx.showLoading()
-      let temp=this.registerform.checked;
-      this.registerform.checked = !this.registerform.checked;
+      let temp=this.registerForm.checked;
+      this.registerForm.checked = !this.registerForm.checked;
       if(temp !== this.checked){
         wx.hideLoading()
       }
@@ -65,10 +55,10 @@ export default {
         email,
         power
       }={
-        username:this.$data.registerform.username,
-        phone:this.$data.registerform.phone,
-        email:this.$data.registerform.email,
-        power:this.$data.registerform.power
+        username:this.$data.registerForm.username,
+        phone:this.$data.registerForm.phone,
+        email:this.$data.registerForm.email,
+        power:this.$data.registerForm.power
       }
       if(username&&phone&&email){
 
