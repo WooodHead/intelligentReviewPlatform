@@ -1,76 +1,92 @@
+<!--suppress HtmlUnknownTag -->
 <template>
-  <div class="wrapper">
-    <div>
+  <div>
+    <div v-if="isRegister" class="realBody">
+      <van-notice-bar
+        background="#ecf9ff"
+        color="#1989fa"
+        left-icon="volume-o"
+        text="小程序还处于内测阶段，如需更改个人资料可以联系开发者，联系邮箱：Marsh@88.com"
+      />
+      <div class="avatar">
+        <van-image
+          :src="userInfo.avatarUrl"
+          height="8rem"
+          round
+          width="8rem"
+        />
+      </div>
+      <div class="info">
+        <p id="tips">{{tips}}</p>
+        <p id="email">您的邮箱为：</p>
+        <p class="importantInfo">{{infoFrom.email}}</p>
+        <p id="phone">您的手机号码为：</p>
+        <br>
+        <p class="importantInfo">{{infoFrom.phone}}</p>
+      </div>
     </div>
-    <ven-cell-group>
-      <van-field :value="registerForm.username" label="用户名" name="username" placeholder="在此处填写" @input="registerForm.username=$event.mp.detail"></van-field>
-      <van-field :value="registerForm.phone" label="电话号码" name="phone" placeholder="在此处填写" type="number" @input="registerForm.phone=$event.mp.detail"></van-field>
-      <van-field :value="registerForm.email" label="邮箱" name="邮箱" placeholder="在此处填写" @input="registerForm.email=$event.mp.detail"></van-field>
-    </ven-cell-group>
-    <div style="position: relative;margin-top: 5%">
-      <van-checkbox :value="registerForm.checked" icon-size="25px" @change="onChange">是否为教师身份？</van-checkbox>
+    <div v-else class="box">
+      <div class="logo">
+        <img alt="imgUndefined" src="/static/images/logo.svg"/>
+      </div>
     </div>
-    <button open-type="getUserInfo" style="position: relative;margin-top:20%" type="primary"  @click="submit">微信登录</button>
-
-
   </div>
 </template>
 <script>
-import mpSwitch from 'mpvue-weui/src/button';
 export default {
-  components: {
-    mpSwitch,
-  },
-  data () {
+  data() {
     return {
-      registerForm:{
+      userInfo: {},
+      isRegister:false,
+      tips:'',
+      infoFrom:{
         username:'',
         phone:'',
         email:'',
-        checked:false,
+        teacher:''
       }
     }
   },
   methods: {
-    canIUse () {
-      return wx.canIUse('button.open-type.getUserInfo')
+    /**
+     * 初始化用户存储在服务器的详细资料
+     */
+    async initData() {
+      let obj = {}
+      obj.token = wx.getStorageSync('token')
+      this.isRegister = await this.$login.isRegister(obj)
+      this.infoFrom.username=wx.getStorageSync('details')[0].username
+      this.infoFrom.phone=wx.getStorageSync('details')[0].phone
+      this.infoFrom.email=wx.getStorageSync('details')[0].email
+      this.userInfo = wx.getStorageSync('userInfo')
     },
-    onChange(){
-      wx.showLoading()
-      let temp=this.registerForm.checked;
-      this.registerForm.checked = !this.registerForm.checked;
-      if(temp !== this.checked){
-        wx.hideLoading()
-      }
-    },onChangeField(event){
-      console.log(event.detail)
-    },
-    async submit(){
-      wx.showLoading({
-        title:'注册中，请等待'
-      })
-      let{
-        username,
-        phone,
-        email,
-        power
-      }={
-        username:this.$data.registerForm.username,
-        phone:this.$data.registerForm.phone,
-        email:this.$data.registerForm.email,
-        power:this.$data.registerForm.power
-      }
-      if(username&&phone&&email){
-
+    timeTips(){
+      let now = new Date();
+      let hours = now.getHours();
+      let username
+      if(wx.getStorageSync('details')[0].teacher===1){
+        username = wx.getStorageSync('userInfo').nickName+"老师"
       }else{
-        wx.hideLoading()
-        wx.showToast({
-          title:'请填写相关信息进行注册',
-          icon:'none',
-        })
-
+        username = wx.getStorageSync('userInfo').nickName+"同学"
+      }
+      if(hours>=0&&hours<=5){
+        this.tips=`深夜了,${username}注意休息`
+      }else if(hours>=6&&hours<=11){
+        this.tips=`早上好,${username}`
+      }else if(hours>=12&&hours<=14){
+        this.tips=`午安,${username}`
+      }else if(hours>=15&&hours<=17){
+        this.tips=`下午好,${username}`
+      }else if (hours>=18&&hours<=22){
+        this.tips=`晚上好,${username}`
+      }else{
+        this.tips=`${username}，该休息了`
       }
     }
+  },
+  onShow() {
+    this.initData()
+    this.timeTips()
   }
 }
 </script>
@@ -79,28 +95,57 @@ export default {
 @import "../../../static/stylus/mixin.styl"
 body
   height: 100%
-  .wrapper
-    .box,.low
-      position: absolute
-      top: 40%
-      left: 50%
-      transform: translate(-50%, -50%)
-      white-space: nowrap
-    .box
-      width: 80%
-      .logo
-        width: 100%
-        padding-bottom: 40rpx
-        margin-bottom: 40rpx
-        text-align: center
-        border-1px:(rgba(7, 17, 27, 0.2))
-        img
-          width: 128rpx
-          height: 128rpx
-      & p,& ul
-        margin-bottom: 40rpx
-      & ul li
-        list-style: disc!important
-        color: gray
-        margin-left: 30rpx
+  .realBody
+    height 100vh
+    background-image url("https://cdn.nlark.com/yuque/0/2019/jpeg/280373/1552400570049-assets/web-upload/32aeb81a-1bf9-4a0c-aa6c-60bada9c1154.jpeg")
+    .avatar
+      position relative
+      left 50%
+      margin-left -64px
+    .info
+      font-size 25px
+      .importantInfo
+        font-family -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif
+        font-size 25px
+        color #ff8400
+        font-weight bolder
+        position relative
+        padding-left 3vh
+    #tips
+      font-family -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif
+      font-size 25px
+      color white
+      font-weight lighter
+      position relative
+      padding-left 3vh
+      padding-top 9.5vh
+    #email
+      font-family -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif
+      font-size 25px
+      color white
+      font-weight lighter
+      position relative
+      padding-left 3vh
+      padding-top 3.5vh
+    #phone
+      font-family -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif
+      font-size 25px
+      color white
+      font-weight lighter
+      position relative
+      padding-left 3vh
+      padding-top 2vh
+  .box
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%,-50%)
+    white-space nowrap
+  .box
+    width: 80%
+    .logo
+      width: 100%
+      padding-bottom: 40rpx
+      margin-bottom: 40rpx
+      text-align: center
 </style>

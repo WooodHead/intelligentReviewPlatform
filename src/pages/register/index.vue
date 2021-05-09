@@ -1,74 +1,91 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div class="wrapper">
-    <div>
+    <div class="tips">
+      <p>您的详细资料</p>
     </div>
-      <ven-cell-group>
-        <van-field :value="registerForm.username" label="用户名" name="username" placeholder="在此处填写" @input="registerForm.username=$event.mp.detail"></van-field>
-        <van-field :value="registerForm.phone" label="电话号码" name="phone" placeholder="在此处填写" type="number" @input="registerForm.phone=$event.mp.detail"></van-field>
-        <van-field :value="registerForm.email" label="邮箱" name="邮箱" placeholder="在此处填写" @input="registerForm.email=$event.mp.detail"></van-field>
-      </ven-cell-group>
-      <div style="position: relative;margin-top: 5%">
-        <van-checkbox :value="registerForm.checked" icon-size="25px" @change="onChange">是否为教师身份？</van-checkbox>
-      </div>
-      <button open-type="getUserInfo" style="position: relative;margin-top:20%" type="primary"  @click="submit">微信登录</button>
-
-
+    <ven-cell-group>
+      <van-field :value="registerForm.username" label="用户名" name="username" placeholder="在此处填写"
+                 @input="registerForm.username=$event.mp.detail"></van-field>
+      <van-field :value="registerForm.phone" label="电话号码" name="phone" placeholder="在此处填写" type="number"
+                 @input="registerForm.phone=$event.mp.detail"></van-field>
+      <van-field :value="registerForm.email" label="邮箱" name="邮箱" placeholder="在此处填写"
+                 @input="registerForm.email=$event.mp.detail"></van-field>
+    </ven-cell-group>
+    <div style="position: relative;margin-top: 5%;margin-left: 5%">
+      <van-checkbox :value="registerForm.checked" icon-size="25px" @change="onChange">是否为教师身份？</van-checkbox>
+    </div>
+    <div class="button">
+      <van-button size="large" type="info" @click="submit">提交资料</van-button>
+    </div>
   </div>
 </template>
+
 <script>
 import mpSwitch from 'mpvue-weui/src/button';
+
 export default {
   components: {
     mpSwitch,
   },
-  data () {
+  data() {
     return {
-      registerForm:{
-        username:'',
-        phone:'',
-        email:'',
-        checked:false,
-      }
+      registerForm: {
+        username: '',
+        phone: '',
+        email: '',
+        checked: false,
+      },
+      userInfo: {},
+      token: ''
     }
   },
   methods: {
-    canIUse () {
-      return wx.canIUse('button.open-type.getUserInfo')
-    },
-    onChange(){
+    onChange() {
       wx.showLoading()
-      let temp=this.registerForm.checked;
+      let temp = this.registerForm.checked;
       this.registerForm.checked = !this.registerForm.checked;
-      if(temp !== this.checked){
+      if (temp !== this.checked) {
         wx.hideLoading()
       }
-    },onChangeField(event){
-      console.log(event.detail)
+    }, onChangeField(event) {
     },
-    async submit(){
+    async submit() {
       wx.showLoading({
-        title:'注册中，请等待'
+        title: '注册中，请等待'
       })
-      let{
+      this.userInfo = wx.getStorageSync('userInfo')
+      this.token = wx.getStorageSync('token')
+      let {
         username,
+        avatar,
         phone,
         email,
-        power
-      }={
-        username:this.$data.registerForm.username,
-        phone:this.$data.registerForm.phone,
-        email:this.$data.registerForm.email,
-        power:this.$data.registerForm.power
+        token,
+        teacher
+      } = {
+        username: this.$data.registerForm.username,
+        avatar: this.userInfo.avatarUrl,
+        phone: this.$data.registerForm.phone,
+        email: this.$data.registerForm.email,
+        token: this.token,
+        teacher: this.$data.registerForm.checked
       }
-      if(username&&phone&&email){
-
-      }else{
+      let obj = {}
+      obj.username = username
+      obj.avatar = avatar
+      obj.phone = phone
+      obj.email = email
+      obj.token = token
+      obj.teacher = teacher
+      if (username && phone && email) {
+        await this.$login.register(obj)
+      } else {
         wx.hideLoading()
         wx.showToast({
-          title:'请填写相关信息进行注册',
-          icon:'none',
+          title: '请填写相关信息进行注册',
+          icon: 'none',
         })
-
       }
     }
   }
@@ -78,29 +95,22 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 @import "../../../static/stylus/mixin.styl"
 body
-  height: 100%
+  .tips
+    height 60px
+
+    p
+      padding-top 20px
+      padding-left 10px
+      font-family -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif
+      color #7a94ac
+
   .wrapper
-    .box,.low
-      position: absolute
-      top: 40%
-      left: 50%
-      transform: translate(-50%, -50%)
-      white-space: nowrap
-    .box
-      width: 80%
-      .logo
-        width: 100%
-        padding-bottom: 40rpx
-        margin-bottom: 40rpx
-        text-align: center
-        border-1px:(rgba(7, 17, 27, 0.2))
-        img
-          width: 128rpx
-          height: 128rpx
-      & p,& ul
-        margin-bottom: 40rpx
-      & ul li
-        list-style: disc!important
-        color: gray
-        margin-left: 30rpx
+    height 100vh
+    background-color #f1f1f1
+
+  .button
+    position: relative;
+    padding-top 3vh
+    width 50vw
+    padding-left 25vw
 </style>

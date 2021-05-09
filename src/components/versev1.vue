@@ -33,11 +33,10 @@ export default {
           vm.author=data.author;
           vm.transOrgin(data);
         mpvue.hideLoading();
-        console.log(data)
         },fail(res) {
           mpvue.hideLoading();
           vm.hasData=false;
-          console.log('fail')
+
         }
       }
 

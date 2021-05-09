@@ -27,6 +27,13 @@ const matations = {
   [types.SET_WINDOWATTRI] (state, v) {
     state.windowAttri = v
     wx.setStorageSync('windowAttri', v)
+  },
+  /**
+   * 设置存储在服务器的详细资料
+   */
+  [types.SET_DETAILS] (state,v){
+    state.details = v
+    wx.setStorageSync('details',v)
   }
 }
 

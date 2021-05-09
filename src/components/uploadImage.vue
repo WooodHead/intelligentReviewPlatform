@@ -5,16 +5,16 @@
     </div>
     <div class="choose_img">
       <ul>
-        <li :class="[(index+1)%imgColumn == 0 ? 'changePadding' : '']" 
-            v-for="(item,index) in imgList" :key="index" 
+        <li v-for="(item,index) in imgList"
+            :key="index" :class="[(index+1)%imgColumn == 0 ? 'changePadding' : '']"
             :style="{height: upLoadIconWidth+'px', width: upLoadIconWidth+'px', marginRight: imgMargin + 'px'}">
-          <img :src="item.src" 
+          <img :src="item.src"
                :style="[item.isWidthShorter ? 'width: 100%' : 'height: 100%']"
-               @click.stop="previewImg" 
+               @click.stop="previewImg"
                :data-src='item.src' />
         </li>
         <li v-if="showUploadIcon"
-            class="upload" 
+            class="upload"
             :style="{height: upLoadIconWidth+'px', width: upLoadIconWidth+'px'}"
             @click="uploadImg()">
           <img src="/static/images/uploadImg.svg"/>

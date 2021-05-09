@@ -3,13 +3,15 @@
     "pages/index/main",
     "pages/personal/main",
     "pages/personalInfo/main",
-    "pages/login/main"
+    "pages/login/main",
+    "pages/register/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "智能评审平台",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f1f1f1"
   },
   "tabBar": {
     "color": "#999",
@@ -42,6 +44,8 @@
     "van-checkbox": "/static/vant/checkbox/index",
     "van-image": "/static/vant/image/index",
     "van-grid": "/static/vant/grid/index",
-    "van-grid-item": "/static/vant/grid-item/index"
+    "van-grid-item": "/static/vant/grid-item/index",
+    "van-popup": "/static/vant/popup/index",
+    "van-notice-bar": "/static/vant/notice-bar/index"
   }
 }

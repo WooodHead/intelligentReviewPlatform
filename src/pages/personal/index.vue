@@ -1,5 +1,5 @@
 <template>
-  <div :style="{minHeight: windowHeight+'px', minWidth: windowWidth+'px'}" class="wrapper">
+  <div class="wrapper">
 
       <div v-if="isLogin">
         <div class="bg-header">
@@ -16,9 +16,14 @@
         </div>
         <div class="vanGrid">
           <van-grid column-num="3">
-            <van-grid-item icon="medal-o" icon-color="#0048FFFF" text="赛事管理" />
+            <van-grid-item
+              icon="medal-o"
+              icon-color="#0048FFFF"
+              text="评审管理"
+              url="/pages/projectManager/main"
+            />
 
-            <van-grid-item icon="manager-o" icon-color="#FF8C00FF" text="我的赛事" />
+            <van-grid-item icon="manager-o" icon-color="#FF8C00FF" text="我的评审" />
 
             <van-grid-item
               icon="info-o"
@@ -84,29 +89,17 @@ export default {
       hasUserInfo: false,
       canIUseGetUserProfile: false,
     }
-  },
-    computed:{
+  }, computed:{
     isLogin(){
-      console.log(this.$store.getters.getLoginStatus)
       return this.$store.getters.getLoginStatus
     }
   },
   methods:{
     async initData(){
       await this.$login.isLogin()
-      console.log(this.isLogin)
       if (this.isLogin) {
         this.userInfo = wx.getStorageSync('userInfo')
       }
-    },
-    initPageStyle () {
-      let that = this
-      wx.getSystemInfo({
-        success (res) {
-          that.windowHeight = res.windowHeight
-          that.windowWidth = res.windowWidth
-        }
-      })
     },
     getUserProfile(e) {
       // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
@@ -116,7 +109,6 @@ export default {
         success: (res) => {
           this.userInfo=res.userInfo;
           this.hasUserInfo=true;
-          console.log(res)
         }
       })
     },
@@ -130,7 +122,6 @@ export default {
   },
   onShow(){
     this.initData()
-    this.initPageStyle()
   }
 }
 </script>
@@ -167,7 +158,6 @@ body
         background-color white
         top 3vh
         box-shadow white
-
 </style>
 <style scoped>
 </style>

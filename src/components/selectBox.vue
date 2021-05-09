@@ -23,8 +23,8 @@ export default {
   watch: {
     selectList: {
       handler (n, o) {
-        console.log('selectList改变了')
-        console.log(n)
+
+
       },
       deep: true
     }
