@@ -45,7 +45,7 @@
   "compileType": "miniprogram",
   "appid": "wx43a3698c6bac5555",
   "projectname": "review-platform",
-  "libVersion": "2.16.0",
+  "libVersion": "2.18.0",
   "condition": {
     "search": {
       "list": []

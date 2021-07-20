@@ -4,7 +4,8 @@
     "pages/personal/main",
     "pages/personalInfo/main",
     "pages/login/main",
-    "pages/register/main"
+    "pages/register/main",
+    "pages/projectManager/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -46,6 +47,8 @@
     "van-grid": "/static/vant/grid/index",
     "van-grid-item": "/static/vant/grid-item/index",
     "van-popup": "/static/vant/popup/index",
-    "van-notice-bar": "/static/vant/notice-bar/index"
+    "van-notice-bar": "/static/vant/notice-bar/index",
+    "i-card": "/static/iView/card/index",
+    "i-button": "/static/iView/button/index"
   }
 }

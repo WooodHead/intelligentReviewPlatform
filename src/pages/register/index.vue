@@ -62,14 +62,14 @@ export default {
         phone,
         email,
         token,
-        teacher
+        power
       } = {
         username: this.$data.registerForm.username,
         avatar: this.userInfo.avatarUrl,
         phone: this.$data.registerForm.phone,
         email: this.$data.registerForm.email,
         token: this.token,
-        teacher: this.$data.registerForm.checked
+        power: this.$data.registerForm.checked
       }
       let obj = {}
       obj.username = username
@@ -77,7 +77,7 @@ export default {
       obj.phone = phone
       obj.email = email
       obj.token = token
-      obj.teacher = teacher
+      obj.power = power
       if (username && phone && email) {
         await this.$login.register(obj)
       } else {

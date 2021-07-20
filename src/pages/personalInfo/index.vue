@@ -43,7 +43,7 @@ export default {
         username:'',
         phone:'',
         email:'',
-        teacher:''
+        power:''
       }
     }
   },
@@ -55,16 +55,17 @@ export default {
       let obj = {}
       obj.token = wx.getStorageSync('token')
       this.isRegister = await this.$login.isRegister(obj)
-      this.infoFrom.username=wx.getStorageSync('details')[0].username
-      this.infoFrom.phone=wx.getStorageSync('details')[0].phone
-      this.infoFrom.email=wx.getStorageSync('details')[0].email
+      this.infoFrom.username=wx.getStorageSync('details').username
+      this.infoFrom.phone=wx.getStorageSync('details').phone
+      this.infoFrom.email=wx.getStorageSync('details').email
+      this.infoFrom.power=wx.getStorageSync('details').power
       this.userInfo = wx.getStorageSync('userInfo')
     },
     timeTips(){
       let now = new Date();
       let hours = now.getHours();
       let username
-      if(wx.getStorageSync('details')[0].teacher===1){
+      if(wx.getStorageSync('details').power===true){
         username = wx.getStorageSync('userInfo').nickName+"老师"
       }else{
         username = wx.getStorageSync('userInfo').nickName+"同学"

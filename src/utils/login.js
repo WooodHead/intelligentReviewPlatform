@@ -11,7 +11,7 @@ function checkDetails(obj) {
         'token': obj.token
       }
     }).then(async (res) => {
-      if (res.data.length != 0) {
+      if (res.data.length !== 0) {
         vue.$store.commit('SET_DETAILS', res.data)
         wx.setStorageSync('details', res.data)
         resolve(res)
@@ -32,7 +32,7 @@ function register(obj) {
         'phone': obj.phone,
         'email': obj.email,
         'token': obj.token,
-        'teacher': obj.teacher
+        'power': obj.power
       }
     }).then(async (res) => {
       wx.hideLoading()
@@ -163,7 +163,6 @@ function showRegisterModal() {
 }
 
 async function isRegister(obj) {
-  console.log(wx.getStorageSync('details'))
   if (!wx.getStorageSync('details')) {
     await checkDetails(obj)
       .then(async (result) => {
