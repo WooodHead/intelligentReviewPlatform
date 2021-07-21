@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cover">
     <div class="cardDiv" v-for='item in cardData' :key="item.id">
       <i-card
         :title="'主办方:'+item.name"
@@ -26,6 +26,9 @@ export default {
   methods: {
     cardActive(e) {
       console.log(e.mp.currentTarget.id)
+      wx.navigateTo({
+        url: '/pages/projectDetailManager/main?id='+e.mp.currentTarget.id
+      })
     },
     btnClick(){
       mpvue.navigateTo({url: '/pages/projectAdd/main'})
@@ -77,5 +80,16 @@ export default {
 
 .cardDiv {
   margin-top: 20px;
+}
+
+.cover {
+  background-color: #e5e5e5;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  overflow: auto;
+  overscroll-behavior-y: contain;
 }
 </style>

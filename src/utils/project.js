@@ -51,7 +51,27 @@ function getCreatedProject() {
   })
 }
 
+function getProjectDetailInfo(matchID){
+  let token = wx.getStorageSync('token')
+  return new Promise((resolve, reject) => {
+    vue.$http.post({
+      'url': '/project/getProjectDetailInfo',
+      'data': {
+        'token':token,
+        'matchID': matchID
+      }
+    }).then(async (res) => {
+      if (res.data.length !== 0) {
+        resolve(res)
+      } else {
+        reject(res.msg)
+      }
+    })
+  })
+}
 
 export default {
-  addProject,getCreatedProject
+  addProject,
+  getCreatedProject,
+  getProjectDetailInfo
 }

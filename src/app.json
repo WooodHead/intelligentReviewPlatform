@@ -6,7 +6,8 @@
     "pages/login/main",
     "pages/register/main",
     "pages/projectManager/main",
-    "pages/projectAdd/main"
+    "pages/projectAdd/main",
+    "pages/projectDetailManager/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -36,6 +37,7 @@
   },
   "usingComponents": {
     "van-button": "/static/vant/button/index",
+    "van-icon": "/static/vant/icon/index",
     "van-field": "/static/vant/field/index",
     "van-switch": "/static/vant/switch/index",
     "van-cell-group": "/static/vant/cell-group/index",
