@@ -20,7 +20,7 @@ function getTokenFromServer () {
     wx.login({
       success: function (res) {
         wx.request({
-          url: Config.baseUrl + '/apis/user/login',
+          url: Config.baseUrl + '/user/login',
           method: 'POST',
           data: {
             code: res.code

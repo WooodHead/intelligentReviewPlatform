@@ -5,7 +5,8 @@
     "pages/personalInfo/main",
     "pages/login/main",
     "pages/register/main",
-    "pages/projectManager/main"
+    "pages/projectManager/main",
+    "pages/projectAdd/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -43,11 +44,15 @@
     "van-col": "/static/vant/col/index",
     "van-tag": "/static/vant/tag/index",
     "van-checkbox": "/static/vant/checkbox/index",
+    "van-radio": "/static/vant/radio/index",
     "van-image": "/static/vant/image/index",
     "van-grid": "/static/vant/grid/index",
     "van-grid-item": "/static/vant/grid-item/index",
     "van-popup": "/static/vant/popup/index",
     "van-notice-bar": "/static/vant/notice-bar/index",
+    "van-datetime-picker": "/static/vant/datetime-picker/index",
+    "van-checkbox-group": "/static/vant/checkbox-group/index",
+    "van-notify": "/static/vant/notify/index",
     "i-card": "/static/iView/card/index",
     "i-button": "/static/iView/button/index"
   }

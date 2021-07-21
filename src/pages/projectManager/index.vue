@@ -20,10 +20,7 @@
 export default {
   data() {
     return {
-      cardData: [{title: "123",name:"公司", status: "进行", id: "1234", time: "2021/7/20"},
-        {title: "456",name:"公司", status: "进行", id: "24235", time: "2021/7/20"},
-        {title: "789",name:"公司", status: "进行", id: "25325", time: "2021/7/20"},
-        {title: "101",name:"公司", status: "进行", id: "35345", time: "2021/7/20"}]
+      cardData: []
     }
   },
   methods: {
@@ -32,7 +29,39 @@ export default {
     },
     btnClick(){
       mpvue.navigateTo({url: '/pages/projectAdd/main'})
+    },
+    async initData(){
+      let initCardData = await this.$project.getCreatedProject()
+      initCardData = initCardData.data
+      let tempArr = []
+      console.log(initCardData)
+      initCardData.forEach(
+        function (item) {
+          let tempObj = {}
+          let title = item.matchName
+          let name = item.creatorName
+          let status = ""
+          if(item.status === 1){
+            status = "结束"
+          }else{
+            status = "进行"
+          }
+          tempObj.title=title
+          tempObj.name=name
+          tempObj.status= status
+          tempObj.time =item.startTime
+          tempObj.id = item.id
+          tempArr.push(tempObj)
+        }
+      )
+      console.log(tempArr)
+      this.cardData = tempArr
+
     }
+  },
+  async onShow(){
+    // console.log(await this.$project.getCreatedProject())
+    this.initData()
   }
 }
 </script>
