@@ -1,6 +1,6 @@
 <template>
   <div id="bg">
-    <van-notify id="van-notify"/>
+    <van-notify id="van-notify" />
     <div style="height: 20px"></div>
     <van-cell-group>
       <van-cell title="基本信息"/>
@@ -32,22 +32,22 @@
     <van-cell-group>
       <van-cell title="评委权限"/>
 
-      <van-cell-group>
-        <van-cell
-          title="评审前可以修改分数"
-          clickable
-          @click="toggle"
-        >
-          <van-checkbox slot="right-icon" :value="modifyScore"/>
-        </van-cell>
-        <van-cell
-          title="评委可以查看排名"
-          clickable
-          @click="toggle1"
-        >
-          <van-checkbox slot="right-icon" :value="readRank"/>
-        </van-cell>
-      </van-cell-group>
+        <van-cell-group>
+          <van-cell
+            title="评审前可以修改分数"
+            clickable
+            @click="toggle"
+          >
+            <van-checkbox slot="right-icon" :value="modifyScore" />
+          </van-cell>
+          <van-cell
+            title="评委可以查看排名"
+            clickable
+            @click="toggle1"
+          >
+            <van-checkbox slot="right-icon" :value="readRank" />
+          </van-cell>
+        </van-cell-group>
 
     </van-cell-group>
 
@@ -65,7 +65,7 @@
       />
     </van-cell-group>
     <div class="footer">
-      <van-button type="info" size="large" @click="creatProject" round style="width: 80vw">提交</van-button>
+      <van-button type="info" size="large" @click="updateProject" round style="width: 80vw">修改</van-button>
 
     </div>
 
@@ -74,7 +74,6 @@
 
 <script>
 import Notify from "../../../static/vant/notify/notify";
-
 export default {
   data() {
     return {
@@ -84,14 +83,15 @@ export default {
       maxHour: 20,
       minDate: new Date().getTime(),
       maxDate: new Date(2022, 10, 1).getTime(),
-      currentDate: new Date().getTime(),
+      currentDate: "",
       fmtDate: "",
-      modifyScore: true,
-      readRank: true,
-      description: "",
-      mysqlTime: '',
-      matchName: '',
-      creatorName: ''
+      modifyScore:true,
+      readRank:true,
+      description:"",
+      mysqlTime:'',
+      matchName:'',
+      creatorName: '',
+      matchID:''
     }
   },
   methods: {
@@ -102,19 +102,17 @@ export default {
       this.show = true
     },
     confirmTime(e) {
-      console.log(e.mp.detail)
       let date2 = new Date(e.mp.detail)
-      console.log(date2)
-      this.currentDate = e.mp.detail
+      this.currentDate=e.mp.detail
       this.fmtDate = this.dateFormat("YYYY-mm-dd HH:MM", date2)
       this.mysqlTime = date2.toISOString().split('T')[0] + ' ' + date2.toTimeString().split(' ')[0];
       this.show = false
     },
-    toggle() {
-      this.modifyScore = !this.modifyScore
+    toggle(){
+      this.modifyScore=!this.modifyScore
     },
-    toggle1() {
-      this.readRank = !this.readRank
+    toggle1(){
+      this.readRank=!this.readRank
     },
     dateFormat(fmt, date) {
       let ret;
@@ -137,46 +135,57 @@ export default {
       ;
       return fmt;
     },
-    async creatProject() {
-      let obj = {}
+    async updateProject(){
+      let obj={}
       obj.matchName = this.$data.matchName
-      obj.creatorName = this.$data.creatorName
-      obj.description = this.$data.description
-      obj.startTime = this.$data.mysqlTime
+      obj.creatorName=this.$data.creatorName
+      obj.description=this.$data.description
+      obj.startTime=this.$data.mysqlTime
       let options = {}
       options.modifyScore = this.modifyScore
       options.readRank = this.readRank
       obj.matchOptions = options
-      console.log(this.modifyScore, this.readRank)
-      if (obj.matchName && obj.creatorName) {
+      obj.matchID = this.matchID
+      if(obj.matchName&&obj.creatorName){
         console.log(this.$data.matchName)
-        try {
-          await this.$project.addProject(obj)
-          Notify({type: 'success', message: '创建成功'});
-        } catch (e) {
-          Notify({type: 'danger', message: e});
+        try{
+          console.log(obj)
+          await this.$project.updateProject(obj)
+          Notify({ type: 'success', message: "修改成功！" });
+        }catch (e) {
+          Notify({ type: 'danger', message: "修改失败" });
         }
-      } else {
-        Notify({type: 'danger', message: "请填写比赛名称和（或）赛事创办方！"});
+      }else{
+        Notify({ type: 'danger', message: "请填写比赛名称和（或）赛事创办方！" });
       }
 
 
     }
   },
-  onShow() {
+  async onShow() {
     let date = new Date()
     console.log(date)
-    this.mysqlTime = date.toISOString().split('T')[0] + ' ' + date.toTimeString().split(' ')[0];
-    this.fmtDate = this.dateFormat("YYYY-mm-dd HH:MM", date)
+    let matchID = this.$root.$mp.query.id
+    this.matchID= matchID
+    let res = await this.$project.getProjectDetailInfo(matchID)
+    res = res.data[0]
+    this.matchName=res.matchName
+    this.creatorName=res.creatorName
+    this.description=res.description
+    this.modifyScore=res.matchOptions.modifyScore
+    this.readRank=res.matchOptions.readRank
+    this.currentDate=new Date(res.startTime).getTime()
+    this.fmtDate=res.startTime
+    this.mysqlTime=res.startTime
   }
 }
 </script>
 
 <style scoped>
-.footer {
+.footer{
   position: absolute;
   bottom: 20px;
-  width: 80vw;
+  width:80vw;
   left: 10vw;
   right: 10vw;
 }

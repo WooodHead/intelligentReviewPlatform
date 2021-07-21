@@ -33,6 +33,36 @@ function addProject(obj) {
   })
 }
 
+function updateProject(obj) {
+  let token = wx.getStorageSync('token')
+  console.log(obj.matchName,obj.creatorName)
+  return new Promise((resolve, reject) => {
+    vue.$http.post({
+      'url': '/project/updateProject',
+      'data': {
+        'matchName':obj.matchName,
+        'description':obj.description,
+        'startTime':obj.startTime,
+        'creatorName':obj.creatorName,
+        'matchOptions':obj.matchOptions,
+        'token':token,
+        'matchID':obj.matchID
+      }
+    }).then(async (res) => {
+      console.log(res)
+      if (res.data.length !== 0) {
+        resolve("修改成功！")
+      } else {
+        reject(res.msg)
+      }
+    })
+      .catch(async (err)=>{
+        reject(err.data)
+    })
+  })
+}
+
+
 function getCreatedProject() {
   let token = wx.getStorageSync('token')
   return new Promise((resolve, reject) => {
@@ -73,5 +103,6 @@ function getProjectDetailInfo(matchID){
 export default {
   addProject,
   getCreatedProject,
-  getProjectDetailInfo
+  getProjectDetailInfo,
+  updateProject
 }

@@ -33,8 +33,7 @@
         is-link
         icon="setting-o"
         title="评审基本信息配置"
-        link-type="navigateTo"
-        url="/pages/dashboard/index"
+        @click="toUpdate"
         iconColor="#0047FDFF"
       />
       <van-cell
@@ -119,7 +118,8 @@ export default {
   data(){
     return{
       status: true,
-      inviteCode:''
+      inviteCode:'',
+      matchID:''
     }
   },
   methods:{
@@ -133,11 +133,17 @@ export default {
           });
         }
       });
+    },
+    toUpdate(){
+      wx.navigateTo({
+        url: '/pages/projectUpdate/main?id='+this.matchID
+      })
     }
   },
   async onLoad(){
     console.log(this.$root.$mp.query)
     let matchID = this.$root.$mp.query.id
+    this.matchID = matchID
     let res = await this.$project.getProjectDetailInfo(matchID)
     res = res.data[0]
     if(res.status === 1){
