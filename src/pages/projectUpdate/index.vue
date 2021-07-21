@@ -1,6 +1,7 @@
 <template>
   <div id="bg">
     <van-notify id="van-notify" />
+    <van-dialog id="van-dialog" />
     <div style="height: 20px"></div>
     <van-cell-group>
       <van-cell title="基本信息"/>
@@ -64,7 +65,7 @@
         border="false"
       />
     </van-cell-group>
-    <div class="footer">
+    <div class="footer" v-show="showBtn">
       <van-button type="info" size="large" @click="updateProject" round style="width: 80vw">修改</van-button>
 
     </div>
@@ -73,6 +74,7 @@
 </template>
 
 <script>
+import Dialog from "../../../static/vant/Dialog/Dialog";
 import Notify from "../../../static/vant/notify/notify";
 export default {
   data() {
@@ -91,7 +93,8 @@ export default {
       mysqlTime:'',
       matchName:'',
       creatorName: '',
-      matchID:''
+      matchID:'',
+      showBtn:true
     }
   },
   methods: {
@@ -169,6 +172,17 @@ export default {
     this.matchID= matchID
     let res = await this.$project.getProjectDetailInfo(matchID)
     res = res.data[0]
+    if(res.status === 1){
+      Dialog.alert({
+        title: '提示！',
+        message: '评审已结束，无法进行更改',
+      }).then(() => {
+        Dialog.close()
+      });
+      this.showBtn=false
+    }else{
+      this.showBtn = true
+    }
     this.matchName=res.matchName
     this.creatorName=res.creatorName
     this.description=res.description

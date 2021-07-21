@@ -2,12 +2,12 @@
   <div class="cover">
 
     <div style="height: 2vh"></div>
-
+    <van-notify id="van-notify"/>
     <van-cell-group>
       <van-cell title="评审状态管理" icon="fire-o" iconColor="#ee0a24"/>
 
       <div v-if="status">
-        <van-cell value="进行中" icon="setting-o" iconColor="#0047FDFF" clickable>
+        <van-cell value="进行中" icon="setting-o" iconColor="#0047FDFF" clickable @click="endProject">
           <view slot="title">
             <view class="van-cell-text">比赛状态</view>
             <van-tag type="danger">结束比赛</van-tag>
@@ -114,6 +114,7 @@
 </template>
 
 <script>
+import Notify from "../../../static/vant/notify/notify";
 export default {
   data(){
     return{
@@ -138,6 +139,17 @@ export default {
       wx.navigateTo({
         url: '/pages/projectUpdate/main?id='+this.matchID
       })
+    },
+    async endProject(){
+      try{
+        await this.$project.endProject(this.matchID)
+        Notify({type: 'success', message: '比赛已结束！'});
+        wx.navigateTo({
+          url: '/pages/projectDetailManager/main?id='+this.matchID
+        })
+      }catch (e) {
+        Notify({type: 'danger', message: e});
+      }
     }
   },
   async onLoad(){
@@ -148,6 +160,8 @@ export default {
     res = res.data[0]
     if(res.status === 1){
       this.status = false
+    }else{
+      this.status=true
     }
     this.inviteCode = res.code
     console.log(res)
