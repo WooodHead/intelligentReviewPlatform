@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 let vue = new Vue()
 
 function addPlayer(obj) {
@@ -7,10 +8,10 @@ function addPlayer(obj) {
     vue.$http.post({
       'url': '/player/addPlayer',
       'data': {
-        'playerName':obj.playerName,
-        'projectName':obj.projectName,
-        'matchID':obj.matchID,
-        'token':token
+        'playerName': obj.playerName,
+        'projectName': obj.projectName,
+        'matchID': obj.matchID,
+        'token': token
       }
     }).then(async (res) => {
       if (res.data.length !== 0) {
@@ -28,13 +29,11 @@ function updatePlayer(obj) {
     vue.$http.post({
       'url': '/player/updatePlayer',
       'data': {
-        'data': {
-          'playerName':obj.playerName,
-          'projectName':obj.projectName,
-          'matchID':obj.matchID,
-          'id':obj.id,
-          'token':token
-        }
+        'playerName': obj.playerName,
+        'projectName': obj.projectName,
+        'matchID': obj.matchID,
+        'id': obj.id,
+        'token': token
       }
     }).then(async (res) => {
       console.log(res)
@@ -44,7 +43,7 @@ function updatePlayer(obj) {
         reject(res.msg)
       }
     })
-      .catch(async (err)=>{
+      .catch(async (err) => {
         reject(err.data)
       })
   })
@@ -58,7 +57,7 @@ function deletePlayer(obj) {
       'data': {
         'matchID': obj.matchID,
         'id': obj.id,
-        'token':token
+        'token': token
       }
     }).then(async (res) => {
       if (res.data.length !== 0) {
@@ -70,13 +69,13 @@ function deletePlayer(obj) {
   })
 }
 
-function getPlayerList(obj){
+function getPlayerList(obj) {
   let token = wx.getStorageSync('token')
   return new Promise((resolve, reject) => {
     vue.$http.post({
       'url': '/player/getPlayerList',
       'data': {
-        'token':token,
+        'token': token,
         'matchID': obj.matchID
       }
     }).then(async (res) => {

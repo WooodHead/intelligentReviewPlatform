@@ -59,6 +59,9 @@
     "van-notify": "/static/vant/notify/index",
     "i-card": "/static/iView/card/index",
     "i-button": "/static/iView/button/index",
-    "van-swipe-cell": "/static/vant/swipe-cell/index"
+    "van-swipe-cell": "/static/vant/swipe-cell/index",
+    "i-swipeout": "/static/iView/swipeout/index",
+    "i-icon": "/static/iView/icon/index",
+    "i-cell": "/static/iView/cell/index"
   }
 }
