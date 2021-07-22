@@ -5,7 +5,6 @@ import store from "./store/index";
 import login from "./utils/login";
 import project from "./utils/project";
 import 'mpvue-weui/src/style/weui.css';
-
 Vue.prototype.$store = store
 Vue.prototype.$login = login
 Vue.prototype.$http = request

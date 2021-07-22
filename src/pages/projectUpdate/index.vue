@@ -74,8 +74,9 @@
 </template>
 
 <script>
-import Dialog from "../../../static/vant/Dialog/Dialog";
 import Notify from "../../../static/vant/notify/notify";
+import Dialog from "../../../static/vant/dialog/dialog";
+
 export default {
   data() {
     return {

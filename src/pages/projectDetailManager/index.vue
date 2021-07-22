@@ -1,6 +1,6 @@
 <template>
   <div class="cover">
-
+    <van-dialog id="van-dialog" />
     <div style="height: 2vh"></div>
     <van-notify id="van-notify"/>
     <van-cell-group>
@@ -41,7 +41,7 @@
         icon="setting-o"
         title="选手配置"
         link-type="navigateTo"
-        url="/pages/dashboard/index"
+        :url=" '/pages/playerConfig/main?id='+matchID "
         iconColor="#0047FDFF"
       />
       <van-cell
@@ -115,6 +115,8 @@
 
 <script>
 import Notify from "../../../static/vant/notify/notify";
+import Dialog from "../../../static/vant/dialog/dialog";
+
 export default {
   data(){
     return{
@@ -142,11 +144,28 @@ export default {
     },
     async endProject(){
       try{
-        await this.$project.endProject(this.matchID)
-        Notify({type: 'success', message: '比赛已结束！'});
-        wx.navigateTo({
-          url: '/pages/projectDetailManager/main?id='+this.matchID
+        Dialog.confirm({
+          title: '警告！',
+          message: '该操作无法逆转，确认结束？',
         })
+          .then(async () => {
+            // on confirm
+            await this.$project.endProject(this.matchID)
+            Notify({type: 'success', message: '比赛已结束!'});
+            let res = await this.$project.getProjectDetailInfo(this.matchID)
+            res = res.data[0]
+            if(res.status === 1){
+              this.status = false
+            }else{
+              this.status=true
+            }
+            this.inviteCode = res.code
+          })
+          .catch(() => {
+            // on cancel
+            Dialog.close()
+          });
+
       }catch (e) {
         Notify({type: 'danger', message: e});
       }

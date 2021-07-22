@@ -7,7 +7,8 @@
     "pages/register/main",
     "pages/projectManager/main",
     "pages/projectAdd/main",
-    "pages/projectDetailManager/main"
+    "pages/projectDetailManager/main",
+    "pages/playerConfig/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -57,6 +58,7 @@
     "van-checkbox-group": "/static/vant/checkbox-group/index",
     "van-notify": "/static/vant/notify/index",
     "i-card": "/static/iView/card/index",
-    "i-button": "/static/iView/button/index"
+    "i-button": "/static/iView/button/index",
+    "van-swipe-cell": "/static/vant/swipe-cell/index"
   }
 }

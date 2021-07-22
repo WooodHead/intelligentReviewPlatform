@@ -5,7 +5,13 @@
         :title="'主办方:'+item.name"
         :extra="item.status"
         @click="cardActive"
-        :id="item.id">
+        :id="item.id"
+        :extraColor="item.status==='进行' ? '#00ff8b':'#ed3f14'"
+        bodySize="18px"
+        border
+        footerColor="#2d8cf0"
+        headerBGColor="#5cadff"
+        headerColor="white">
         <view slot="content">{{ item.title }}</view>
         <view slot="footer">开始时间：{{ item.time }}</view>
       </i-card>
