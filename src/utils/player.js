@@ -32,6 +32,7 @@ function updatePlayer(obj) {
           'playerName':obj.playerName,
           'projectName':obj.projectName,
           'matchID':obj.matchID,
+          'id':obj.id,
           'token':token
         }
       }
@@ -73,7 +74,7 @@ function getPlayerList(obj){
   let token = wx.getStorageSync('token')
   return new Promise((resolve, reject) => {
     vue.$http.post({
-      'url': '/project/getPlayerList',
+      'url': '/player/getPlayerList',
       'data': {
         'token':token,
         'matchID': obj.matchID

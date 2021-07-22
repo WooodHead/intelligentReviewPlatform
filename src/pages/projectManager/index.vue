@@ -1,5 +1,6 @@
 <template>
   <div class="cover">
+
     <div class="cardDiv" v-for='item in cardData' :key="item.id">
       <i-card
         :title="'主办方:'+item.name"
@@ -16,6 +17,7 @@
         <view slot="footer">开始时间：{{ item.time }}</view>
       </i-card>
     </div>
+
     <div class="footer">
       <i-button type="primary" inline size="small" shape="round" @click="btnClick">+</i-button>
     </div>
