@@ -8,7 +8,8 @@
     "pages/projectManager/main",
     "pages/projectAdd/main",
     "pages/projectDetailManager/main",
-    "pages/playerConfig/main"
+    "pages/playerConfig/main",
+    "pages/ruleConfig/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -62,6 +63,7 @@
     "van-swipe-cell": "/static/vant/swipe-cell/index",
     "i-swipeout": "/static/iView/swipeout/index",
     "i-icon": "/static/iView/icon/index",
-    "i-cell": "/static/iView/cell/index"
+    "i-cell": "/static/iView/cell/index",
+    "i-cell-group": "/static/iView/cell-group/index"
   }
 }

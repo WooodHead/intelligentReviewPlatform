@@ -49,7 +49,7 @@
         icon="setting-o"
         title="评分项配置"
         link-type="navigateTo"
-        url="/pages/dashboard/index"
+        :url=" '/pages/ruleConfig/main?id='+matchID "
         iconColor="#0047FDFF"
       />
     </van-cell-group>

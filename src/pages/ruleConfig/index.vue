@@ -4,34 +4,13 @@
     <van-dialog id="van-dialog" />
     <van-notify id="van-notify"/>
     <i-cell-group>
-      <div class="cardDiv" v-for='item in playerData' :key="item.id">
-        <!--      <van-swipe-cell-->
-        <!--        id="swipe-cell"-->
-        <!--        :right-width="120"-->
-        <!--        async-close-->
-        <!--      >-->
-        <!--        <i-card-->
-        <!--          :title="'选手名:'+item.playerName"-->
-        <!--          full-->
-        <!--          bodySize="18px"-->
-        <!--          footerColor="#2d8cf0"-->
-        <!--          bgColor="color"-->
-        <!--          headerColor="white">-->
-        <!--          <view slot="content">参赛项目名称： {{ item.projectName }}</view>-->
-        <!--        </i-card>-->
-
-        <!--        <view slot="right" style="height: 100%">-->
-        <!--          <van-button type="primary" autoHeight :id="item.id" @click="openUpdateDialog">修改</van-button>-->
-        <!--          <van-button type="danger" autoHeight :id="item.id" @click="deletePlayer">删除</van-button>-->
-        <!--        </view>-->
-
-        <!--      </van-swipe-cell>-->
+      <div class="cardDiv" v-for='item in ruleData' :key="item.id">
 
         <i-swipeout  :actions="actions" @change="onChange" :id="item.id">
           <view slot="content">
             <i-cell
-              :title="'选手名称:'+item.playerName"
-              :label="'参赛项目名称:'+item.projectName">
+              :title="'评分项名称:'+item.ruleName"
+              :label="'最大分数:'+item.maxScore">
             </i-cell>
           </view>
         </i-swipeout>
@@ -42,7 +21,7 @@
 
     <van-dialog
       use-slot
-      title="添加选手信息"
+      title="添加评分项信息"
       :show="showAddDialog"
       show-cancel-button
       :close="onClose2"
@@ -52,16 +31,16 @@
     >
       <van-cell-group>
         <van-field
-          :value="playerName"
-          @input="playerName=$event.mp.detail"
-          label="选手名称"
-          placeholder="请输入选手名称"
+          :value="ruleName"
+          @input="ruleName=$event.mp.detail"
+          label="评分项名称"
+          placeholder="请输入评分项名称"
         />
         <van-field
-          :value="projectName"
-          @input="projectName=$event.mp.detail"
-          label="选手项目"
-          placeholder="请输入选手项目名称"
+          :value="maxScore"
+          @input="maxScore=$event.mp.detail"
+          label="最大分数"
+          placeholder="请输入最大分数"
           :border="false"
         />
       </van-cell-group>
@@ -69,7 +48,7 @@
 
     <van-dialog
       use-slot
-      title="修改选手信息"
+      title="修改评分项信息"
       :show="showUpdateDialog"
       show-cancel-button
       :close="onClose"
@@ -79,16 +58,16 @@
     >
       <van-cell-group>
         <van-field
-          :value="playerName"
-          @input="playerName=$event.mp.detail"
-          label="选手名称"
-          placeholder="请输入选手名称"
+          :value="ruleName"
+          @input="ruleName=$event.mp.detail"
+          label="评分项名称"
+          placeholder="请输入评分项名称"
         />
         <van-field
-          :value="projectName"
-          @input="projectName=$event.mp.detail"
-          label="选手项目"
-          placeholder="请输入选手项目名称"
+          :value="maxScore"
+          @input="maxScore=$event.mp.detail"
+          label="最大分数"
+          placeholder="请输入最大分数"
           :border="false"
         />
       </van-cell-group>
@@ -109,12 +88,12 @@ export default {
   name: "index",
   data(){
     return{
-      playerData:[],
+      ruleData:[],
       matchID:'',
       showUpdateDialog:false,
       showAddDialog:false,
-      playerName:'',
-      projectName:'',
+      ruleName:'',
+      maxScore:'',
       targetId:'',
       toggle:false,
       actions:[
@@ -138,7 +117,7 @@ export default {
     }
   },
   methods:{
-    deletePlayer(e){
+    deleteRule(e){
       try{
         Dialog.confirm({
           title: '警告！',
@@ -151,11 +130,11 @@ export default {
             let obj={}
             obj.id=id
             obj.matchID = this.matchID
-            await this.$player.deletePlayer(obj)
+            await this.$rule.deleteRule(obj)
             Notify({type: 'success', message: '删除成功!'});
-            let res = await this.$player.getPlayerList(obj)
+            let res = await this.$rule.getRuleList(obj)
             res = res.data
-            this.playerData = res
+            this.ruleData = res
           })
           .catch(() => {
             // on cancel
@@ -169,14 +148,14 @@ export default {
     onClose(){
       this.showUpdateDialog = false
       this.targetId=""
-      this.$data.projectName=""
-      this.$data.playerName=""
+      this.$data.maxScore=""
+      this.$data.ruleName=""
     },
     onClose2(){
       this.showAddDialog = false
       this.targetId=""
-      this.$data.projectName=""
-      this.$data.playerName=""
+      this.$data.maxScore=""
+      this.$data.ruleName=""
     },
     async openUpdateDialog(e){
       this.showUpdateDialog = true
@@ -193,34 +172,34 @@ export default {
       this.showUpdateDialog = false
       let obj={}
       obj.matchID=this.matchID
-      obj.projectName=this.$data.projectName
-      obj.playerName=this.$data.playerName
+      obj.maxScore=this.$data.maxScore
+      obj.ruleName=this.$data.ruleName
       obj.id=this.targetId
-      if (obj.projectName && obj.playerName) {
+      if (obj.maxScore && obj.ruleName) {
         try {
-          await this.$player.updatePlayer(obj)
+          await this.$rule.updateRule(obj)
           Notify({type: 'success', message: '修改成功'});
         } catch (e) {
           Notify({type: 'danger', message: e});
         }
       } else {
-        Notify({type: 'danger', message: "请填写选手名称和（或）选手项目名称！"});
+        Notify({type: 'danger', message: "请填写评分项名称和（或）最大分数！"});
       }
-      let res = await this.$player.getPlayerList(obj)
-      this.playerData = res.data
+      let res = await this.$rule.getRuleList(obj)
+      this.ruleData = res.data
       this.targetId=""
-      this.$data.projectName=""
-      this.$data.playerName=""
+      this.$data.maxScore=""
+      this.$data.ruleName=""
     },
     async confirmB(){
       this.showAddDialog = false
       let obj={}
       obj.matchID=this.matchID
-      obj.projectName=this.$data.projectName
-      obj.playerName=this.$data.playerName
-      if (obj.projectName && obj.playerName) {
+      obj.maxScore=this.$data.maxScore
+      obj.ruleName=this.$data.ruleName
+      if (obj.maxScore && obj.ruleName) {
         try {
-          await this.$player.addPlayer(obj)
+          await this.$rule.addRule(obj)
           Notify({type: 'success', message: '添加成功'});
         } catch (e) {
           Notify({type: 'danger', message: e});
@@ -228,16 +207,16 @@ export default {
       } else {
         Notify({type: 'danger', message: "请填写选手名称和（或）选手项目名称！"});
       }
-      let res = await this.$player.getPlayerList(obj)
-      this.playerData = res.data
-      this.$data.projectName=""
-      this.$data.playerName=""
+      let res = await this.$rule.getRuleList(obj)
+      this.ruleData = res.data
+      this.$data.maxScore=""
+      this.$data.ruleName=""
     },
     onChange(e){
       console.log(e)
       //index = e.target.index
       if(e.target.index === 0){
-        this.deletePlayer(e)
+        this.deleteRule(e)
       }else{
         this.openUpdateDialog(e)
       }
@@ -250,9 +229,9 @@ export default {
     this.matchID = matchID
     let obj = {}
     obj.matchID=matchID
-    let res = await this.$player.getPlayerList(obj)
+    let res = await this.$rule.getRuleList(obj)
     console.log(res)
-    this.playerData = res.data
+    this.ruleData = res.data
   },
 
 }
