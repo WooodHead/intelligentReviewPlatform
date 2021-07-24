@@ -5,28 +5,6 @@
     <van-notify id="van-notify"/>
     <i-cell-group>
       <div class="cardDiv" v-for='item in playerData' :key="item.id">
-        <!--      <van-swipe-cell-->
-        <!--        id="swipe-cell"-->
-        <!--        :right-width="120"-->
-        <!--        async-close-->
-        <!--      >-->
-        <!--        <i-card-->
-        <!--          :title="'选手名:'+item.playerName"-->
-        <!--          full-->
-        <!--          bodySize="18px"-->
-        <!--          footerColor="#2d8cf0"-->
-        <!--          bgColor="color"-->
-        <!--          headerColor="white">-->
-        <!--          <view slot="content">参赛项目名称： {{ item.projectName }}</view>-->
-        <!--        </i-card>-->
-
-        <!--        <view slot="right" style="height: 100%">-->
-        <!--          <van-button type="primary" autoHeight :id="item.id" @click="openUpdateDialog">修改</van-button>-->
-        <!--          <van-button type="danger" autoHeight :id="item.id" @click="deletePlayer">删除</van-button>-->
-        <!--        </view>-->
-
-        <!--      </van-swipe-cell>-->
-
         <i-swipeout  :actions="actions" @change="onChange" :id="item.id">
           <view slot="content">
             <i-cell

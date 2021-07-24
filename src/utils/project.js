@@ -1,6 +1,45 @@
 import Vue from 'vue'
 let vue = new Vue()
 
+function joinProject(code){
+  let token = wx.getStorageSync('token')
+  return new Promise((resolve, reject) => {
+    vue.$http.post({
+      'url': '/project/joinProject',
+      'data': {
+        'token':token,
+        'code': code
+      }
+    }).then(async (res) => {
+      if (res.data.length !== 0) {
+        resolve(res)
+      } else {
+        reject(res.msg)
+      }
+    })
+  })
+}
+
+function checkProject(code){
+  let token = wx.getStorageSync('token')
+  return new Promise((resolve, reject) => {
+    vue.$http.post({
+      'url': '/project/checkProject',
+      'data': {
+        'token':token,
+        'code': code
+      }
+    }).then(async (res) => {
+      if (res.hasOwnProperty("data")) {
+        resolve(true)
+      } else {
+        reject(res.msg)
+      }
+    })
+  })
+}
+
+
 function addProject(obj) {
   let token = wx.getStorageSync('token')
   function randomString() {
@@ -126,5 +165,7 @@ export default {
   getCreatedProject,
   getProjectDetailInfo,
   updateProject,
-  endProject
+  endProject,
+  joinProject,
+  checkProject
 }

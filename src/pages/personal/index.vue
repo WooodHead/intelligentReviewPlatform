@@ -20,7 +20,7 @@
               icon="medal-o"
               icon-color="#0048FFFF"
               text="评审管理"
-              url="/pages/projectManager/main"
+              url="/pages/matchManager/main"
             />
 
             <van-grid-item icon="manager-o" icon-color="#FF8C00FF" text="我的评审" />

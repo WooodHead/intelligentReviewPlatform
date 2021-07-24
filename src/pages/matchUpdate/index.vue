@@ -1,5 +1,5 @@
 <template>
-  <div id="bg">
+  <div class="cover">
     <van-notify id="van-notify" />
     <van-dialog id="van-dialog" />
     <div style="height: 20px"></div>
@@ -203,5 +203,15 @@ export default {
   width:80vw;
   left: 10vw;
   right: 10vw;
+}
+.cover {
+  background-color: #e5e5e5;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  overflow: auto;
+  overscroll-behavior-y: contain;
 }
 </style>

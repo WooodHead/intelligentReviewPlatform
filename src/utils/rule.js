@@ -9,13 +9,16 @@ function addRule(obj) {
       'url': '/rule/addRule',
       'data': {
         'maxScore': obj.maxScore,
+        'minScore': obj.minScore,
         'ruleName': obj.ruleName,
         'matchID': obj.matchID,
         'token': token
       }
     }).then(async (res) => {
-      if (res.data.length !== 0) {
+      if (res.hasOwnProperty("data")) {
         resolve("创建成功！")
+      }else if(res.code === "101"){
+        reject(res.msg)
       } else {
         reject(res.msg)
       }
@@ -30,15 +33,17 @@ function updateRule(obj) {
       'url': '/rule/updateRule',
       'data': {
         'maxScore': obj.maxScore,
+        'minScore': obj.minScore,
         'ruleName': obj.ruleName,
         'matchID': obj.matchID,
         'id': obj.id,
         'token': token
       }
     }).then(async (res) => {
-      console.log(res)
-      if (res.data.length !== 0) {
-        resolve("修改成功！")
+      if (res.hasOwnProperty("data")) {
+        resolve("创建成功！")
+      }else if(res.code === "101"){
+        reject(res.msg)
       } else {
         reject(res.msg)
       }
@@ -69,14 +74,14 @@ function deleteRule(obj) {
   })
 }
 
-function getRuleList(obj) {
+function getRuleList(matchID) {
   let token = wx.getStorageSync('token')
   return new Promise((resolve, reject) => {
     vue.$http.post({
       'url': '/rule/getRuleList',
       'data': {
         'token': token,
-        'matchID': obj.matchID
+        'matchID': matchID
       }
     }).then(async (res) => {
       if (res.data.length !== 0) {

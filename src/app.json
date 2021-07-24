@@ -5,11 +5,17 @@
     "pages/personalInfo/main",
     "pages/login/main",
     "pages/register/main",
-    "pages/projectManager/main",
-    "pages/projectAdd/main",
-    "pages/projectDetailManager/main",
+    "pages/matchManager/main",
+    "pages/matchAdd/main",
+    "pages/matchDetailManager/main",
+    "pages/matchUpdate/main",
     "pages/playerConfig/main",
-    "pages/ruleConfig/main"
+    "pages/ruleConfig/main",
+    "pages/playerList/main",
+    "pages/ruleList/main",
+    "pages/scorePage/main",
+    "pages/scoreAdd/main",
+    "pages/scoreUpdate/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -64,6 +70,8 @@
     "i-swipeout": "/static/iView/swipeout/index",
     "i-icon": "/static/iView/icon/index",
     "i-cell": "/static/iView/cell/index",
-    "i-cell-group": "/static/iView/cell-group/index"
+    "i-cell-group": "/static/iView/cell-group/index",
+    "van-tab": "/static/vant/tab/index",
+    "van-tabs": "/static/vant/tabs/index"
   }
 }

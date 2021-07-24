@@ -6,6 +6,7 @@ import login from "./utils/login";
 import project from "./utils/project";
 import player from "./utils/player";
 import rule from "./utils/rule"
+import score from "./utils/score";
 import 'mpvue-weui/src/style/weui.css';
 Vue.prototype.$store = store
 Vue.prototype.$login = login
@@ -13,6 +14,7 @@ Vue.prototype.$http = request
 Vue.prototype.$project= project
 Vue.prototype.$player= player
 Vue.prototype.$rule= rule
+Vue.prototype.$score = score
 Vue.config.productionTip = false
 App.mpType = 'app'
 

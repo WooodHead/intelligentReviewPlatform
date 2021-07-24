@@ -35,11 +35,11 @@ export default {
     cardActive(e) {
       console.log(e.mp.currentTarget.id)
       wx.navigateTo({
-        url: '/pages/projectDetailManager/main?id='+e.mp.currentTarget.id
+        url: '/pages/matchDetailManager/main?id='+e.mp.currentTarget.id
       })
     },
     btnClick(){
-      mpvue.navigateTo({url: '/pages/projectAdd/main'})
+      mpvue.navigateTo({url: '/pages/matchAdd/main'})
     },
     async initData(){
       let initCardData = await this.$project.getCreatedProject()

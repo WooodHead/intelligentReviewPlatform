@@ -139,7 +139,7 @@ export default {
     },
     toUpdate(){
       wx.navigateTo({
-        url: '/pages/projectUpdate/main?id='+this.matchID
+        url: '/pages/matchUpdate/main?id='+this.matchID
       })
     },
     async endProject(){

@@ -10,7 +10,7 @@
           <view slot="content">
             <i-cell
               :title="'评分项名称:'+item.ruleName"
-              :label="'最大分数:'+item.maxScore">
+              :label="'最高分数:'+item.maxScore+',最低分数'+item.minScore">
             </i-cell>
           </view>
         </i-swipeout>
@@ -39,10 +39,22 @@
         <van-field
           :value="maxScore"
           @input="maxScore=$event.mp.detail"
-          label="最大分数"
-          placeholder="请输入最大分数"
+          label="最高分数"
+          placeholder="请输入最高分数"
+          rule="number"
+          type="digit"
           :border="false"
         />
+        <van-field
+          :value="minScore"
+          @input="minScore=$event.mp.detail"
+          label="最低分数"
+          placeholder="请输入最低分数"
+          rule="number"
+          type="digit"
+          :border="false"
+        />
+
       </van-cell-group>
     </van-dialog>
 
@@ -66,8 +78,19 @@
         <van-field
           :value="maxScore"
           @input="maxScore=$event.mp.detail"
-          label="最大分数"
-          placeholder="请输入最大分数"
+          label="最高分数"
+          placeholder="请输入最高分数"
+          type="digit"
+          rule="number"
+          :border="false"
+        />
+        <van-field
+          :value="minScore"
+          @input="minScore=$event.mp.detail"
+          label="最低分数"
+          placeholder="请输入最低分数"
+          rule="number"
+          type="digit"
           :border="false"
         />
       </van-cell-group>
@@ -94,6 +117,7 @@ export default {
       showAddDialog:false,
       ruleName:'',
       maxScore:'',
+      minScore:'',
       targetId:'',
       toggle:false,
       actions:[
@@ -173,22 +197,25 @@ export default {
       let obj={}
       obj.matchID=this.matchID
       obj.maxScore=this.$data.maxScore
+      obj.minScore=this.$data.minScore
       obj.ruleName=this.$data.ruleName
       obj.id=this.targetId
-      if (obj.maxScore && obj.ruleName) {
+      if (obj.maxScore && obj.ruleName && obj.minScore) {
         try {
           await this.$rule.updateRule(obj)
           Notify({type: 'success', message: '修改成功'});
         } catch (e) {
-          Notify({type: 'danger', message: e});
+          console.error(e.sqlMessage)
+          Notify({type: 'danger', message: e.sqlMessage});
         }
       } else {
-        Notify({type: 'danger', message: "请填写评分项名称和（或）最大分数！"});
+        Notify({type: 'danger', message: "请填写评分项名称和（或）分数！"});
       }
       let res = await this.$rule.getRuleList(obj)
       this.ruleData = res.data
       this.targetId=""
       this.$data.maxScore=""
+      this.$data.minScore=""
       this.$data.ruleName=""
     },
     async confirmB(){
@@ -196,20 +223,22 @@ export default {
       let obj={}
       obj.matchID=this.matchID
       obj.maxScore=this.$data.maxScore
+      obj.minScore=this.$data.minScore
       obj.ruleName=this.$data.ruleName
-      if (obj.maxScore && obj.ruleName) {
+      if (obj.maxScore && obj.ruleName && obj.minScore) {
         try {
           await this.$rule.addRule(obj)
           Notify({type: 'success', message: '添加成功'});
         } catch (e) {
-          Notify({type: 'danger', message: e});
+          Notify({type: 'danger', message: e.sqlMessage});
         }
       } else {
-        Notify({type: 'danger', message: "请填写选手名称和（或）选手项目名称！"});
+        Notify({type: 'danger', message: "请填写选手名称和（或）分数！"});
       }
       let res = await this.$rule.getRuleList(obj)
       this.ruleData = res.data
       this.$data.maxScore=""
+      this.$data.minScore=""
       this.$data.ruleName=""
     },
     onChange(e){
