@@ -82,6 +82,7 @@ export default {
   async onLoad() {
     let matchID = this.$root.$mp.query.id
     this.matchID = matchID
+    console.log(this.$root.$mp.query)
     let res = await this.$score.getWaitScoreList(matchID)
     // let res2 = await this.$score.getAlreadyScoreList(matchID)
     this.waitData = res.data

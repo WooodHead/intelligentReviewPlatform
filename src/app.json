@@ -15,7 +15,10 @@
     "pages/ruleList/main",
     "pages/scorePage/main",
     "pages/scoreAdd/main",
-    "pages/scoreUpdate/main"
+    "pages/scoreUpdate/main",
+    "pages/myProject/main",
+    "pages/finalResult/main",
+    "pages/scoreDetail/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

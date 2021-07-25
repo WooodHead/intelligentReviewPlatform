@@ -39,6 +39,23 @@ function checkProject(code){
   })
 }
 
+function getMyProject() {
+  let token = wx.getStorageSync('token')
+  return new Promise((resolve, reject) => {
+    vue.$http.post({
+      'url': '/project/getMyProject',
+      'data': {
+        'token':token
+      }
+    }).then(async (res) => {
+      if (res.data.length !== 0) {
+        resolve(res)
+      } else {
+        reject(res.msg)
+      }
+    })
+  })
+}
 
 function addProject(obj) {
   let token = wx.getStorageSync('token')
@@ -160,6 +177,24 @@ function getProjectDetailInfo(matchID){
   })
 }
 
+function canICheckProject(code){
+  let token = wx.getStorageSync('token')
+  return new Promise((resolve, reject) => {
+    vue.$http.post({
+      'url': '/project/checkProject',
+      'data': {
+        'token':token,
+        'code': code
+      }
+    }).then(async (res) => {
+      if (res.hasOwnProperty("data")) {
+        resolve(res.data)
+      } else {
+        reject(res.msg)
+      }
+    })
+  })
+}
 export default {
   addProject,
   getCreatedProject,
@@ -167,5 +202,7 @@ export default {
   updateProject,
   endProject,
   joinProject,
-  checkProject
+  checkProject,
+  getMyProject,
+  canICheckProject
 }

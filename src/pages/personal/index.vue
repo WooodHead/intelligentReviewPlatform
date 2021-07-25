@@ -23,7 +23,7 @@
               url="/pages/matchManager/main"
             />
 
-            <van-grid-item icon="manager-o" icon-color="#FF8C00FF" text="我的评审" />
+            <van-grid-item icon="manager-o" icon-color="#FF8C00FF" text="我的评审" url="/pages/myProject/main" />
 
             <van-grid-item
               icon="info-o"

@@ -30,8 +30,11 @@
           <van-tag type="primary">赛事描述</van-tag>
         </view>
       </van-cell>
-      <van-cell>
+      <van-cell v-if="status">
         <van-button type="info" size="large" @click="join">进入评审</van-button>
+      </van-cell>
+      <van-cell v-else>
+        <van-button type="info" size="large" @click="check">查看结果</van-button>
       </van-cell>
     </view>
     <view slot="footer">开始时间：{{ time }}</view>
@@ -58,6 +61,21 @@ export default {
       wx.navigateTo({
         url:'/pages/scorePage/main?id='+this.id
       })
+    },
+    async check(){
+      let bool = await this.$project.canICheckProject(this.code)
+      if(bool){
+        wx.navigateTo({
+          url:'/pages/finalResult/main?code='+this.code
+        })
+      }else{
+        wx.showToast({
+          title: "根据赛事创建者的设置，评委无权查看结果",
+          icon: 'error',
+          duration: 3000
+        })
+      }
+
     }
   },
   async onLoad(){
