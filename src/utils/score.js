@@ -95,6 +95,21 @@ function getMatchScore(code){
   })
 }
 
+function getMatchScoreT(code){
+  let token = wx.getStorageSync('token')
+  return new Promise((resolve, reject) => {
+    vue.$http.post({
+      'url': '/score/getMatchScoreT',
+      'data': {
+        'token': token,
+        'code': code
+      }
+    }).then(async (res) => {
+      resolve(res.data)
+    })
+  })
+}
+
 function getScore(projectID){
   let token = wx.getStorageSync('token')
   return new Promise((resolve, reject) => {
@@ -115,5 +130,6 @@ export default {
   getWaitScoreList,
   getAlreadyScoreList,
   getScore,
-  getMatchScore
+  getMatchScore,
+  getMatchScoreT
 }

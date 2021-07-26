@@ -88,24 +88,28 @@
         icon="bar-chart-o"
         title="平均分排名"
         iconColor="#0047FDFF"
+        :url="'/pages/scoreDetail/main?code='+this.inviteCode+'&type=1'"
       />
       <van-cell
         is-link
         icon="chart-trending-o"
-        title="平均分去最高最低排名"
+        title="平均分(去高低)最低排名"
         iconColor="#0047FDFF"
+        :url="'/pages/scoreDetail/main?code='+this.inviteCode+'&type=2'"
       />
       <van-cell
         is-link
         icon="bar-chart-o"
         title="各项平均分排名"
         iconColor="#0047FDFF"
+        :url="'/pages/scoreDetail/main?code='+this.inviteCode+'&type=3'"
       />
       <van-cell
         is-link
         icon="chart-trending-o"
         title="总分排名"
         iconColor="#0047FDFF"
+        :url="'/pages/scoreDetail/main?code='+this.inviteCode+'&type=4'"
       />
     </van-cell-group>
 
