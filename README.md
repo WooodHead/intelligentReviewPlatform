@@ -1,7 +1,8 @@
 # review-platform
 
-> A Mpvue project
+> A Mpvue project  
 
+后端仓库链接 [intelligentReviewPlatformBackend](https://github.com/Xy2002/intelligentReviewPlatformBackend)
 ## Build Setup
 
 ``` bash
